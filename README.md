@@ -108,5 +108,12 @@ We know that a task is overdue when it is both unchecked and the due date is bef
 ```
 
 ### Step 4: Pull the partial view into the Tasks Index view
-
-
+The last step is to insert the partial view into the Index for Tasks. To do this, see the following razor syntax and HTML helper.
+- Navigate to the Tasks Index view 
+```CSharp
+<h2>Overdue Tasks</h2>
+@{ 
+    Html.RenderPartial("Reminders");
+}
+```
+[Top](#Top)
