@@ -72,5 +72,41 @@ public ActionResult Create([Bind(Include = "ListID,Title,Date")] List list)
 ```
 [Top](#Top)
 
+<a name="partial"></a>
 ## Creating a Partial View
-Coming Soon...
+### Step 1: Create a method in the controller for the new partial view
+In this example, we named our new method `Reminders()` and copy and pasted the body of the `Index()` method because we want it to return all the tasks in `db.Tasks` (See below).
+```CSharp
+ //CREATE NEW PAGE
+public ActionResult Reminders()
+{
+    var tasks = db.Tasks.Include(t => t.List);
+    return View(tasks.ToList());
+}
+```
+### Step 2: Add a Partial View for the method
+In order to add the view for the `Reminders()` method, do the following:
+- Right-click on `Reminders()`
+- Choose Add View
+- DO NOT change the name of the view
+- Select the List template
+- Select the Task model
+- Check the box for Partial View
+- Click Add
+Now, in the Views folder for Tasks, you should see a new .cshtml page was created called Reminders.cshtml.
+
+### Step 3: Update the Reminders.cshtml file to show only tasks that are overdue
+We know that a task is overdue when it is both unchecked and the due date is before the current date. By nesting the `if` statement inside the foreach loop, we are enforcing that only the tasks that meet the requirement in the `if` statement will be displayed.
+```CSharp
+@foreach (var item in Model)
+{
+    if (item.Date < DateTime.Now && item.IsDone == false)
+    {
+        //Code
+    }
+}
+```
+
+### Step 4: Pull the partial view into the Tasks Index view
+
+
